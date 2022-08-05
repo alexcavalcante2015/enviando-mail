@@ -24,6 +24,8 @@ public class AppTest {
 		try {
 		
 		Properties properties = new Properties();
+		
+		properties.put("mail.smtp.ssl.trust", "*");
 		properties.put("mail.smtp.auth", "true"); /*Autorização*/
 		properties.put("mail.smtp.starttls", "true"); /*Autenticação*/
 		properties.put("mail.smtp.host", "smtp.gmail.com"); /*Servidor gmail Google*/
@@ -41,12 +43,17 @@ public class AppTest {
 		Address[] toUser = InternetAddress.parse("alexcavalcante2015@gmail.com, mastodonalex2@gmail.com, alexcomte524@gmail.com");
 		
 		Message message = new MimeMessage(session);
-		message.setFrom(new InternetAddress(userName)); /*Quem está enviando*/
+		message.setFrom(new InternetAddress(userName, "Alex JDev - Treinamento")); /*Quem está enviando*/
 		message.setRecipients(Message.RecipientType.TO, toUser); /*Email de destino*/
 		message.setSubject("Chegou o e-mail enviado com Java"); /*Assunto do e-mail*/
 		message.setText("Olá programador, você acaba de receber um e-mail enviado com Java do curso Formação Java Web do Alex"); /*Corpo do e-email*/
 		
 		Transport.send(message);
+		
+		/*Caso o email não esteja sendo enviado então
+		 * coloque um tempo de espera mais isso só pode
+		 * usado para testes*/
+		Thread.sleep(5000);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
